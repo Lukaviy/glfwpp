@@ -84,10 +84,31 @@ namespace glfw
     private:
         GlfwLibrary() = default;
 
+        bool owner{true};
+
     public:
         ~GlfwLibrary()
         {
-            glfwTerminate();
+            if(owner)
+            {
+                glfwTerminate();
+            }
+        }
+
+        GlfwLibrary(const GlfwLibrary&) = delete;
+        GlfwLibrary(GlfwLibrary&& e) noexcept
+        {
+            e.owner = false;
+        }
+
+        GlfwLibrary& operator=(const GlfwLibrary&) = delete;
+        GlfwLibrary& operator=(GlfwLibrary&& e) noexcept
+        {
+            if(this != &e)
+            {
+                e.owner = false;
+            }
+            return *this;
         }
 
         [[nodiscard]] friend GlfwLibrary init()
