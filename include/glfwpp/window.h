@@ -689,7 +689,7 @@ namespace glfw
 
         void setIcon(const std::vector<Image>& iconCandidates_)
         {
-            glfwSetWindowIcon(_handle, iconCandidates_.size(), iconCandidates_.data());
+            glfwSetWindowIcon(_handle, static_cast<int>(iconCandidates_.size()), iconCandidates_.data());
         }
 
         [[nodiscard]] std::tuple<int, int> getPos() const
